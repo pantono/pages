@@ -25,7 +25,7 @@ final class PagesMigration extends BasePantonoMigration
             ->addColumn('slug', 'string')
             ->addColumn('date_created', 'datetime')
             ->addColumn('date_updated', 'datetime')
-            ->addColumn('current_version_id', 'integer')
+            ->addColumn('current_version_id', 'integer', ['null' => true])
             ->addLinkedColumn('status_id', $this->addTablePrefix('page_status'), 'id')
             ->create();
 
