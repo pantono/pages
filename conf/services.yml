@@ -1,0 +1,4 @@
+Pages:
+  class: Pantono\Pages\Pages
+Redirects:
+  class: Pantono\Pages\Redirects
