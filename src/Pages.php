@@ -29,6 +29,11 @@ class Pages
         $this->dispatcher = $dispatcher;
     }
 
+    public function getPageById(int $id): ?Page
+    {
+        return $this->hydrator->lookupRecord(Page::class, $id);
+    }
+
     public function getPageBySlug(string $slug): ?Page
     {
         return $this->hydrator->hydrate(Page::class, $this->repository->getPageBySlug($slug));
