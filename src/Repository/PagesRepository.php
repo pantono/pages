@@ -24,7 +24,7 @@ class PagesRepository extends DefaultRepository
     public function getPagesByFilter(PageFilter $filter): array
     {
         $select = $this->getDb()->select()->from($this->appendTablePrefix('page'))
-            ->joinInner($this->appendTablePrefix('page_version'), $this->appendTablePrefix('page_version') . '.page_id = ' . $this->appendTablePrefix('page') . '.id', []);
+            ->joinInner($this->appendTablePrefix('page_version'), $this->appendTablePrefix('page_version') . '.id = ' . $this->appendTablePrefix('page') . '.current_version_id', []);
 
         if ($filter->getStatus() !== null) {
             $select->where($this->appendTablePrefix('page') . '.status_id = ?', $filter->getStatus()->getId());
