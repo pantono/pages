@@ -32,6 +32,7 @@ class PageVersion implements SavableInterface
     private ?string $ogDescription = null;
     private ?string $canonicalUrl = null;
     private string $content = '';
+    private bool $includeInSitemap;
 
     public function getId(): ?int
     {
@@ -181,5 +182,15 @@ class PageVersion implements SavableInterface
     public function setContent(string $content): void
     {
         $this->content = $content;
+    }
+
+    public function isIncludeInSitemap(): bool
+    {
+        return $this->includeInSitemap;
+    }
+
+    public function setIncludeInSitemap(bool $includeInSitemap): void
+    {
+        $this->includeInSitemap = $includeInSitemap;
     }
 }
