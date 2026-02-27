@@ -43,4 +43,12 @@ class PagesRepository extends DefaultRepository
 
         return $this->getDb()->fetchAll($select);
     }
+
+    /**
+     * @return array<int, mixed>
+     */
+    public function getStatusList(): array
+    {
+        return $this->selectAll($this->appendTablePrefix('page_status'));
+    }
 }

@@ -34,6 +34,14 @@ class Pages
         return $this->hydrator->lookupRecord(Page::class, $id);
     }
 
+    /**
+     * @return PageStatus[]
+     */
+    public function getStatusList(): array
+    {
+        return $this->hydrator->hydrateSet(PageStatus::class, $this->repository->getStatusList());
+    }
+
     public function getPageBySlug(string $slug): ?Page
     {
         return $this->hydrator->hydrate(Page::class, $this->repository->getPageBySlug($slug));
