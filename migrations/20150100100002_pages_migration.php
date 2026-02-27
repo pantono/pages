@@ -22,11 +22,12 @@ final class PagesMigration extends BasePantonoMigration
         ]);
 
         $this->table($this->addTablePrefix('page'))
-            ->addColumn('slug', 'string')
+            ->addColumn('slug', 'string', ['null' => false])
             ->addColumn('date_created', 'datetime')
             ->addColumn('date_updated', 'datetime')
             ->addColumn('current_version_id', 'integer', ['null' => true])
             ->addLinkedColumn('status_id', $this->addTablePrefix('page_status'), 'id')
+            ->addIndex('slug', ['unique' => true])
             ->create();
 
         $this->table($this->addTablePrefix('page_version'))
