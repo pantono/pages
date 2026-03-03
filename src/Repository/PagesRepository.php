@@ -23,23 +23,25 @@ class PagesRepository extends DefaultRepository
      */
     public function getPagesByFilter(PageFilter $filter): array
     {
-        $select = $this->getDb()->select()->from($this->appendTablePrefix('page'))
-            ->joinInner($this->appendTablePrefix('page_version'), $this->appendTablePrefix('page_version') . '.id = ' . $this->appendTablePrefix('page') . '.current_version_id', []);
+        $select = $this->getDb()->select('p.*')->from($this->appendTablePrefix('page'), 'p')
+            ->innerJoin('p', $this->appendTablePrefix('page_version'), 'pv', 'p.current_version_id = pv.id');
 
         if ($filter->getStatus() !== null) {
-            $select->where($this->appendTablePrefix('page') . '.status_id = ?', $filter->getStatus()->getId());
+            $select->where('p.status_id = :status_id')
+                ->setParameter('status_id', $filter->getStatus()->getId());
         }
 
         if ($filter->getContentSearch() !== null) {
-            $select->where($this->appendTablePrefix('page_version') . '.content like ?', '%' . $filter->getContentSearch() . '%');
+            $select->where('pv.content like :content_search')
+                ->setParameter('content_search', '%' . $filter->getContentSearch() . '%');
         }
 
         if ($filter->getTitleSearch() !== null) {
-            $select->where($this->appendTablePrefix('page_version') . '.title like ?', '%' . $filter->getTitleSearch() . '%');
+            $select->where('pv.title like :title_search')
+                ->setParameter('title_search', '%' . $filter->getTitleSearch() . '%');
         }
 
-        $filter->setTotalResults($this->getCount($select));
-        $select->limitPage($filter->getPage(), $filter->getPerPage());
+        $this->applyCountAndLimit($select, $filter);
 
         return $this->getDb()->fetchAll($select);
     }

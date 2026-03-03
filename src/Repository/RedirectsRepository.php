@@ -33,20 +33,22 @@ class RedirectsRepository extends DefaultRepository
      */
     public function getRedirectsByFilter(RedirectFilter $filter): array
     {
-        $select = $this->getDb()->select()->from('redirect');
+        $select = $this->getDb()->select('r.*')->from($this->appendTablePrefix('redirect'), 'r');
 
         if ($filter->getFromSearch() !== null) {
-            $select->where('from LIKE ?', '%' . $filter->getFromSearch() . '%');
+            $select->where('r.from LIKE :from_search')
+                ->setParameter('from_search', '%' . $filter->getFromSearch() . '%');
         }
         if ($filter->getToSearch() !== null) {
-            $select->where('to LIKE ?', '%' . $filter->getToSearch() . '%');
+            $select->where('r.to LIKE :to_search')
+                ->setParameter('to_search', '%' . $filter->getToSearch() . '%');
         }
         if ($filter->getStatusCode() !== null) {
-            $select->where('status_code=?', $filter->getStatusCode());
+            $select->where('r.status_code=:status_code')
+                ->setParameter('status_code', $filter->getStatusCode());
         }
 
-        $filter->setTotalResults($this->getCount($select));
-        $select->limitPage($filter->getPage(), $filter->getPerPage());
+        $this->applyCountAndLimit($select, $filter);
 
         return $this->getDb()->fetchAll($select);
     }
