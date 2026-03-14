@@ -37,6 +37,11 @@ class Pages
         return $this->hydrator->lookupRecord(Page::class, $id);
     }
 
+    public function getBlockTypeById(int $id): ?PageBlockType
+    {
+        return $this->hydrator->lookupRecord(PageBlockType::class, $id);
+    }
+
     /**
      * @return PageStatus[]
      */
