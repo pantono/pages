@@ -212,4 +212,9 @@ class PageVersion implements SavableInterface
     {
         $this->blocks = $blocks;
     }
+
+    public function addBlock(PageBlock $block): void
+    {
+        $this->blocks[] = $block;
+    }
 }
