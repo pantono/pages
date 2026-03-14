@@ -59,6 +59,7 @@ class PagesRepository extends DefaultRepository
     {
         $this->saveModel($version);
         foreach ($version->getBlocks() as $block) {
+            $block->setPageVersionId($version->getId());
             $this->saveModel($block);
         }
     }
