@@ -9,6 +9,7 @@ use Pantono\Contracts\Attributes\FieldName;
 use Pantono\Contracts\Application\Interfaces\SavableInterface;
 use Pantono\Database\Traits\SavableModel;
 use Pantono\Images\Model\Image;
+use Pantono\Contracts\Attributes\Database\OneToMany;
 
 #[DatabaseTable('page_version')]
 class PageVersion implements SavableInterface
@@ -33,6 +34,11 @@ class PageVersion implements SavableInterface
     private ?string $canonicalUrl = null;
     private string $content = '';
     private bool $includeInSitemap;
+    /**
+     * @var PageBlock[]
+     */
+    #[OneToMany(targetModel: PageBlock::class, mappedBy: 'page_version_id')]
+    private array $blocks = [];
 
     public function getId(): ?int
     {
@@ -192,5 +198,18 @@ class PageVersion implements SavableInterface
     public function setIncludeInSitemap(bool $includeInSitemap): void
     {
         $this->includeInSitemap = $includeInSitemap;
+    }
+
+    /**
+     * @return PageBlock[]
+     */
+    public function getBlocks(): array
+    {
+        return $this->blocks;
+    }
+
+    public function setBlocks(array $blocks): void
+    {
+        $this->blocks = $blocks;
     }
 }

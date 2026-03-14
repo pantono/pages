@@ -15,6 +15,9 @@ use Pantono\Pages\Filter\PageFilter;
 use Pantono\Pages\Model\PageStatus;
 use Pantono\Pages\Event\PrePageStatusSaveEvent;
 use Pantono\Pages\Event\PostPageStatusSaveEvent;
+use Pantono\Pages\Model\PageBlockType;
+use Pantono\Pages\Event\PrePageBlockTypeSaveEvent;
+use Pantono\Pages\Event\PostPageBlockTypeSaveEvent;
 
 class Pages
 {
@@ -80,7 +83,7 @@ class Pages
         $event->setPrevious($previous);
         $this->dispatcher->dispatch($event);
 
-        $this->repository->saveModel($version);
+        $this->repository->savePageVersion($version);
 
         $event = new PostPageVersionSaveEvent();
         $event->setCurrent($version);
@@ -100,6 +103,22 @@ class Pages
 
         $event = new PostPageStatusSaveEvent();
         $event->setStatus($status);
+        $event->setPrevious($previous);
+        $this->dispatcher->dispatch($event);
+    }
+
+    public function saveBlockType(PageBlockType $blockType): void
+    {
+        $previous = $blockType->getId() ? $this->hydrator->lookupRecord(PageBlockType::class, $blockType->getId()) : null;
+        $event = new PrePageBlockTypeSaveEvent();
+        $event->setCurrent($blockType);
+        $event->setPrevious($previous);
+        $this->dispatcher->dispatch($event);
+
+        $this->repository->saveModel($blockType);
+
+        $event = new PostPageBlockTypeSaveEvent();
+        $event->setCurrent($blockType);
         $event->setPrevious($previous);
         $this->dispatcher->dispatch($event);
     }

@@ -4,6 +4,7 @@ namespace Pantono\Pages\Repository;
 
 use Pantono\Database\Repository\DefaultRepository;
 use Pantono\Pages\Filter\PageFilter;
+use Pantono\Pages\Model\PageVersion;
 
 class PagesRepository extends DefaultRepository
 {
@@ -52,5 +53,13 @@ class PagesRepository extends DefaultRepository
     public function getStatusList(): array
     {
         return $this->selectAll($this->appendTablePrefix('page_status'));
+    }
+
+    public function savePageVersion(PageVersion $version): void
+    {
+        $this->saveModel($version);
+        foreach ($version->getBlocks() as $block) {
+            $this->saveModel($block);
+        }
     }
 }
