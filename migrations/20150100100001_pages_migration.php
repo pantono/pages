@@ -6,7 +6,7 @@ use Pantono\Database\Migration\Base\BasePantonoMigration;
 
 final class PagesMigration extends BasePantonoMigration
 {
-    public function change(): void
+    public function up(): void
     {
         $this->table($this->addTablePrefix('page_status'))
             ->addColumn('name', 'string')
@@ -48,11 +48,9 @@ final class PagesMigration extends BasePantonoMigration
             ->addLinkedColumn('og_image_id', $this->addTablePrefix('image'), 'id')
             ->create();
 
-        if ($this->isMigratingUp()) {
-            $this->table($this->addTablePrefix('page'))
-                ->addForeignKey('current_version_id', $this->addTablePrefix('page_version'), 'id')
-                ->update();
-        }
+        $this->table($this->addTablePrefix('page'))
+            ->addForeignKey('current_version_id', $this->addTablePrefix('page_version'), 'id')
+            ->update();
 
         $this->table($this->addTablePrefix('redirect'), ['id' => false])
             ->addColumn('from', 'string')
@@ -60,5 +58,17 @@ final class PagesMigration extends BasePantonoMigration
             ->addColumn('status_code', 'integer', ['default' => 301])
             ->addIndex('from', ['unique' => true])
             ->create();
+    }
+
+    public function down(): void
+    {
+        $this->table($this->addTablePrefix('page'))
+            ->dropForeignKey('current_version_id')
+            ->save();
+
+        $this->table($this->addTablePrefix('redirect'))->drop()->save();
+        $this->table($this->addTablePrefix('page_version'))->drop()->save();
+        $this->table($this->addTablePrefix('page'))->drop()->save();
+        $this->table($this->addTablePrefix('page_status'))->drop()->save();
     }
 }
