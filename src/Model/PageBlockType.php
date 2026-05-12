@@ -17,6 +17,7 @@ class PageBlockType implements SavableInterface
 
     private ?int $id = null;
     private string $name;
+    private string $displayType;
     /**
      * @var array<mixed>
      */
@@ -46,6 +47,16 @@ class PageBlockType implements SavableInterface
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    public function getDisplayType(): string
+    {
+        return $this->displayType;
+    }
+
+    public function setDisplayType(string $displayType): void
+    {
+        $this->displayType = $displayType;
     }
 
     /**
