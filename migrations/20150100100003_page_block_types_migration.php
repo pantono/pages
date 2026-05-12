@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Pantono\Database\Migration\Base\BasePantonoMigration;
 
-final class PageBlocksMigration extends BasePantonoMigration
+final class PageBlockTypesMigration extends BasePantonoMigration
 {
     public function up(): void
     {
