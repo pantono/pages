@@ -50,7 +50,7 @@ final class PageBlocksMigration extends BasePantonoMigration
             ->addLinkedColumn('page_version_id', $this->addTablePrefix('page_version'), 'id')
             ->addLinkedColumn('parent_block_id', $this->addTablePrefix('page_block'), 'id', ['null' => true], ['delete' => 'SET NULL'])
             ->addLinkedColumn('block_type_id', $this->addTablePrefix('page_block_type'), 'id')
-            ->addColumn('content', 'json', ['null' => true])
+            ->addColumn('content', 'text', ['null' => true])
             ->addColumn('settings', 'json', ['null' => true])
             ->addColumn('display_order', 'integer', ['default' => 0])
             ->addIndex(['page_version_id', 'parent_block_id', 'display_order'])
