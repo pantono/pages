@@ -5,6 +5,7 @@ namespace Pantono\Pages\Repository;
 use Pantono\Database\Repository\DefaultRepository;
 use Pantono\Pages\Filter\PageFilter;
 use Pantono\Pages\Model\PageVersion;
+use Pantono\Pages\Model\PageBlock;
 
 class PagesRepository extends DefaultRepository
 {
@@ -59,8 +60,17 @@ class PagesRepository extends DefaultRepository
     {
         $this->saveModel($version);
         foreach ($version->getBlocks() as $block) {
-            $block->setPageVersionId($version->getId());
-            $this->saveModel($block);
+            $this->savePageBlock($version, $block);
+        }
+    }
+
+    public function savePageBlock(PageVersion $version, PageBlock $block): void
+    {
+        $block->setPageVersionId($version->getId());
+        $this->saveModel($block);
+        foreach ($block->getChildren() as $child) {
+            $child->setParentBlockId($block->getId());
+            $this->savePageBlock($version, $child);
         }
     }
 }
