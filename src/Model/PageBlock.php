@@ -9,6 +9,8 @@ use Pantono\Database\Traits\SavableModel;
 use Pantono\Contracts\Application\Interfaces\SavableInterface;
 use Pantono\Contracts\Attributes\DatabaseTable;
 use Pantono\Contracts\Attributes\Database\OneToMany;
+use Pantono\Contracts\Attributes\Locator;
+use Pantono\Pages\Pages;
 
 #[DatabaseTable('page_block')]
 class PageBlock implements SavableInterface
@@ -32,6 +34,8 @@ class PageBlock implements SavableInterface
      */
     #[OneToMany(targetModel: PageBlock::class, mappedBy: 'parent_block_id')]
     private array $children = [];
+    #[Locator(methodName: 'getRenderedContent', className: Pages::class), FieldName('$this')]
+    private ?string $renderedContent = null;
 
     public function getId(): ?int
     {
@@ -117,5 +121,15 @@ class PageBlock implements SavableInterface
     public function setChildren(array $children): void
     {
         $this->children = $children;
+    }
+
+    public function getRenderedContent(): ?string
+    {
+        return $this->renderedContent;
+    }
+
+    public function setRenderedContent(?string $renderedContent): void
+    {
+        $this->renderedContent = $renderedContent;
     }
 }

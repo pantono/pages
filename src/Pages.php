@@ -18,6 +18,8 @@ use Pantono\Pages\Event\PostPageStatusSaveEvent;
 use Pantono\Pages\Model\PageBlockType;
 use Pantono\Pages\Event\PrePageBlockTypeSaveEvent;
 use Pantono\Pages\Event\PostPageBlockTypeSaveEvent;
+use Pantono\Pages\Model\PageBlock;
+use Pantono\Pages\Event\PageBlockRenderEvent;
 
 class Pages
 {
@@ -126,5 +128,13 @@ class Pages
         $event->setCurrent($blockType);
         $event->setPrevious($previous);
         $this->dispatcher->dispatch($event);
+    }
+
+    public function getRenderedContent(PageBlock $block): ?string
+    {
+        $event = new PageBlockRenderEvent();
+        $event->setBlock($block);
+        $this->dispatcher->dispatch($event);
+        return $event->getRenderedContent();
     }
 }
