@@ -1,2 +1,2 @@
 RenderBlockImageListener:
-  class: Pantono\Pages\Event\RenderImageListener
+  class: Pantono\Pages\Events\RenderImageListener
