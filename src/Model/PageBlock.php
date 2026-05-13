@@ -11,6 +11,7 @@ use Pantono\Contracts\Attributes\DatabaseTable;
 use Pantono\Contracts\Attributes\Database\OneToMany;
 use Pantono\Contracts\Attributes\Locator;
 use Pantono\Pages\Pages;
+use Pantono\Contracts\Attributes\NoSave;
 
 #[DatabaseTable('page_block')]
 class PageBlock implements SavableInterface
@@ -34,7 +35,7 @@ class PageBlock implements SavableInterface
      */
     #[OneToMany(targetModel: PageBlock::class, mappedBy: 'parent_block_id')]
     private array $children = [];
-    #[Locator(methodName: 'getRenderedContent', className: Pages::class), FieldName('$this')]
+    #[Locator(methodName: 'getRenderedContent', className: Pages::class), FieldName('$this'), NoSave]
     private ?string $renderedContent = null;
 
     public function getId(): ?int
