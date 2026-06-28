@@ -10,6 +10,6 @@ final class PageMetaMigration extends BasePantonoMigration
     {
         $this->tablePrefix('page_version')
             ->addColumn('meta', 'json')
-            ->create();
+            ->update();
     }
 }
