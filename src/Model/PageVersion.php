@@ -10,6 +10,7 @@ use Pantono\Contracts\Application\Interfaces\SavableInterface;
 use Pantono\Database\Traits\SavableModel;
 use Pantono\Images\Model\Image;
 use Pantono\Contracts\Attributes\Database\OneToMany;
+use Pantono\Contracts\Attributes\Filter;
 
 #[DatabaseTable('page_version')]
 class PageVersion implements SavableInterface
@@ -34,6 +35,11 @@ class PageVersion implements SavableInterface
     private ?string $canonicalUrl = null;
     private string $content = '';
     private bool $includeInSitemap;
+    /**
+     * @var array<string,mixed>
+     */
+    #[Filter('json_decode')]
+    private array $meta = [];
     /**
      * @var PageBlock[]
      */
@@ -216,5 +222,18 @@ class PageVersion implements SavableInterface
     public function addBlock(PageBlock $block): void
     {
         $this->blocks[] = $block;
+    }
+
+    /**
+     * @return array<string,mixed>
+     */
+    public function getMeta(): array
+    {
+        return $this->meta;
+    }
+
+    public function setMeta(array $meta): void
+    {
+        $this->meta = $meta;
     }
 }
