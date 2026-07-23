@@ -20,7 +20,7 @@ final class PageBlockTypesMigration extends BasePantonoMigration
     public function down(): void
     {
         $this->table($this->addTablePrefix('page_block_type'))
-            ->removeColumn('block_type')
+            ->removeColumn('display_type')
             ->update();
     }
 }
