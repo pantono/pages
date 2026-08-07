@@ -84,8 +84,12 @@ class MenusRepository extends DefaultRepository
     {
         $select = $this->getDb()->select('m')->from($this->pt('menu'), 'm');
 
+        if ($filter->getIncludeDeleted() === false) {
+            $select->andWhere('m.deleted = 0');
+        }
+
         if ($filter->getSearch() !== null) {
-            $select->where('m.name like :search or m.description like :search')
+            $select->andWhere('m.name like :search or m.description like :search')
                 ->setParameter('search', '%' . $filter->getSearch() . '%');
         }
         $this->applyCountAndLimit($select, $filter);

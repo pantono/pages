@@ -15,6 +15,7 @@ class Menu implements SavableInterface
     private ?int $id = null;
     private string $name;
     private string $description;
+    private bool $deleted;
     /**
      * @var MenuItem[]
      */
@@ -49,6 +50,16 @@ class Menu implements SavableInterface
     public function setDescription(string $description): void
     {
         $this->description = $description;
+    }
+
+    public function isDeleted(): bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): void
+    {
+        $this->deleted = $deleted;
     }
 
     /**

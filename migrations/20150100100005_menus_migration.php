@@ -27,6 +27,7 @@ final class MenusMigration extends BasePantonoMigration
         $this->tablePrefix('menu')
             ->addColumn('name', 'string')
             ->addColumn('description', 'text', ['null' => true])
+            ->addColumn('deleted', 'boolean')
             ->create();
 
         $this->tablePrefix('menu_item')
