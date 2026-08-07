@@ -30,7 +30,8 @@ class MenusRepository extends DefaultRepository
                 WHEN mi.type_id = 3 THEN c.title
                 ELSE mi.title
             END AS title',
-            'mit.external'
+            'mit.external',
+            'mi.type_id'
         )->from($this->pt('menu_item'), 'mi')
             ->innerJoin('mi', $this->pt('menu_item_type'), 'mit', 'mi.type_id = mit.id')
             ->leftJoin('mi', $this->pt('page'), 'p', 'mi.type_id = 1 AND mi.target = CAST(p.id AS VARCHAR)')

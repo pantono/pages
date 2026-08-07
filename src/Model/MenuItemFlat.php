@@ -8,6 +8,7 @@ class MenuItemFlat
     private string $target;
     private string $title;
     private bool $external;
+    private int $typeId;
 
     public function getId(): int
     {
@@ -47,5 +48,15 @@ class MenuItemFlat
     public function setExternal(bool $external): void
     {
         $this->external = $external;
+    }
+
+    public function getTypeId(): int
+    {
+        return $this->typeId;
+    }
+
+    public function setTypeId(int $typeId): void
+    {
+        $this->typeId = $typeId;
     }
 }
