@@ -9,6 +9,7 @@ use Pantono\Pages\Model\Menu;
 use Pantono\Pages\Model\MenuItemFlat;
 use Pantono\Pages\Event\PreMenuSaveEvent;
 use Pantono\Pages\Event\PostMenuSaveEvent;
+use Pantono\Pages\Model\MenuItemType;
 
 class Menus
 {
@@ -50,5 +51,13 @@ class Menus
         $event->setCurrent($menu);
         $event->setPrevious($previous);
         $this->dispatcher->dispatch($event);
+    }
+
+    /**
+     * @return MenuItemType[]
+     */
+    public function getAllMenuItemTypes(): array
+    {
+        return $this->hydrator->hydrateSet(MenuItemType::class, $this->repository->getAllMenuItemTypes());
     }
 }

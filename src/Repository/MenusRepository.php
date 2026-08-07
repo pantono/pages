@@ -67,4 +67,12 @@ class MenusRepository extends DefaultRepository
         }
         $deleteQb->executeQuery();
     }
+
+    /**
+     * @return array<int,mixed>
+     */
+    public function getAllMenuItemTypes(): array
+    {
+        return $this->selectAll($this->pt('menu_item_type'));
+    }
 }
