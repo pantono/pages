@@ -5,6 +5,7 @@ namespace Pantono\Pages\Repository;
 use Pantono\Database\Repository\DefaultRepository;
 use Pantono\Pages\Model\Menu;
 use Doctrine\DBAL\ArrayParameterType;
+use Pantono\Pages\Filter\MenuFilter;
 
 class MenusRepository extends DefaultRepository
 {
@@ -74,5 +75,21 @@ class MenusRepository extends DefaultRepository
     public function getAllMenuItemTypes(): array
     {
         return $this->selectAll($this->pt('menu_item_type'));
+    }
+
+    /**
+     * @return array<int,mixed>
+     */
+    public function getMenusByFilter(MenuFilter $filter): array
+    {
+        $select = $this->getDb()->select('m')->from($this->pt('menu'), 'm');
+
+        if ($filter->getSearch() !== null) {
+            $select->where('m.name like :search or m.description like :search')
+                ->setParameter('search', '%' . $filter->getSearch() . '%');
+        }
+        $this->applyCountAndLimit($select, $filter);
+
+        return $this->getDb()->fetchAll($select);
     }
 }

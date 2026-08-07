@@ -10,6 +10,7 @@ use Pantono\Pages\Model\MenuItemFlat;
 use Pantono\Pages\Event\PreMenuSaveEvent;
 use Pantono\Pages\Event\PostMenuSaveEvent;
 use Pantono\Pages\Model\MenuItemType;
+use Pantono\Pages\Filter\MenuFilter;
 
 class Menus
 {
@@ -35,6 +36,14 @@ class Menus
     public function getFlatMenuItemsForMenuId(int $id): array
     {
         return $this->hydrator->hydrateSet(MenuItemFlat::class, $this->repository->getFlatMenuItemsForMenuId($id));
+    }
+
+    /**
+     * @return Menu[]
+     */
+    public function getMenusByFilter(MenuFilter $filter): array
+    {
+        return $this->hydrator->hydrateSet(Menu::class, $this->repository->getMenusByFilter($filter));
     }
 
     public function saveMenu(Menu $menu): void
