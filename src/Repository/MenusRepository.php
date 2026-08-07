@@ -84,7 +84,7 @@ class MenusRepository extends DefaultRepository
      */
     public function getMenusByFilter(MenuFilter $filter): array
     {
-        $select = $this->getDb()->select('m')->from($this->pt('menu'), 'm');
+        $select = $this->getDb()->select('m.*')->from($this->pt('menu'), 'm');
 
         if ($filter->getIncludeDeleted() === false) {
             $select->andWhere('m.deleted = :deleted')
