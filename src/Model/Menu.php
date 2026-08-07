@@ -64,6 +64,13 @@ class Menu implements SavableInterface
         $this->items = $items;
     }
 
+    public function addItem(MenuItem $item): void
+    {
+        $items = $this->getItems();
+        $items[] = $item;
+        $this->items = $items;
+    }
+
     /**
      * @return array<int,mixed>
      */
