@@ -12,13 +12,16 @@ final class MenusMigration extends BasePantonoMigration
         $this->tablePrefix('menu_item_type')
             ->addColumn('name', 'string')
             ->addColumn('external', 'boolean')
+            ->addColumn('product', 'boolean')
+            ->addColumn('page', 'boolean')
+            ->addColumn('category', 'boolean')
             ->create();
 
         $this->insertOnCreate($this->addTablePrefix('menu_item_type'), [
-            ['id' => 1, 'name' => 'Page', 'external' => 0],
-            ['id' => 2, 'name' => 'Product', 'external' => 0],
-            ['id' => 3, 'name' => 'Category', 'external' => 0],
-            ['id' => 4, 'name' => 'External', 'external' => 1],
+            ['id' => 1, 'name' => 'Page', 'external' => 0, 'category' => 0, 'product' => 0, 'page' => 1],
+            ['id' => 2, 'name' => 'Product', 'external' => 0, 'category' => 0, 'product' => 1, 'page' => 0],
+            ['id' => 3, 'name' => 'Category', 'external' => 0, 'category' => 1, 'product' => 0, 'page' => 0],
+            ['id' => 4, 'name' => 'External', 'external' => 1, 'category' => 0, 'product' => 0, 'page' => 0],
         ]);
 
         $this->tablePrefix('menu')

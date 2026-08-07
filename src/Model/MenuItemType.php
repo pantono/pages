@@ -14,6 +14,9 @@ class MenuItemType implements SavableInterface
     private ?int $id = null;
     private string $name;
     private bool $external;
+    private bool $product;
+    private bool $category;
+    private bool $page;
 
     public function getId(): ?int
     {
@@ -43,5 +46,35 @@ class MenuItemType implements SavableInterface
     public function setExternal(bool $external): void
     {
         $this->external = $external;
+    }
+
+    public function isProduct(): bool
+    {
+        return $this->product;
+    }
+
+    public function setProduct(bool $product): void
+    {
+        $this->product = $product;
+    }
+
+    public function isCategory(): bool
+    {
+        return $this->category;
+    }
+
+    public function setCategory(bool $category): void
+    {
+        $this->category = $category;
+    }
+
+    public function isPage(): bool
+    {
+        return $this->page;
+    }
+
+    public function setPage(bool $page): void
+    {
+        $this->page = $page;
     }
 }
