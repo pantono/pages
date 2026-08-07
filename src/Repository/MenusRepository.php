@@ -33,10 +33,10 @@ class MenusRepository extends DefaultRepository
             'mit.external'
         )->from($this->pt('menu_item'), 'mi')
             ->innerJoin('mi', $this->pt('menu_item_type'), 'mit', 'mi.type_id = mit.id')
-            ->leftJoin('mi', $this->pt('page'), 'p', 'mi.type_id = 1 AND mi.target = p.id')
+            ->leftJoin('mi', $this->pt('page'), 'p', 'mi.type_id = 1 AND mi.target = CAST(p.id AS VARCHAR)')
             ->leftJoin('p', $this->pt('page_version'), 'pv', 'p.current_version_id = pv.id')
-            ->leftJoin('mi', $this->pt('product'), 'pr', 'mi.type_id = 2 AND mi.target = pr.id')
-            ->leftJoin('mi', $this->pt('category'), 'c', 'mi.type_id = 3 AND mi.target = c.id')
+            ->leftJoin('mi', $this->pt('product'), 'pr', 'mi.type_id = 2 AND mi.target = CAST(pr.id AS VARCHAR)')
+            ->leftJoin('mi', $this->pt('category'), 'c', 'mi.type_id = 3 AND mi.target_id = c.id')
             ->where('mi.menu_id = :menu_id')
             ->setParameter('menu_id', $id)
             ->orderBy('mi.display_order');
