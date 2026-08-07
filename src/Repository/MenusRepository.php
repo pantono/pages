@@ -26,7 +26,7 @@ class MenusRepository extends DefaultRepository
             END AS target',
             'CASE
                 WHEN mi.type_id = 1 THEN pv.page_title
-                WHEN mi.type_id = 2 THEN pr.title
+                WHEN mi.type_id = 2 THEN prv.title
                 WHEN mi.type_id = 3 THEN c.title
                 ELSE mi.title
             END AS title',
@@ -35,6 +35,7 @@ class MenusRepository extends DefaultRepository
             ->innerJoin('mi', $this->pt('menu_item_type'), 'mit', 'mi.type_id = mit.id')
             ->leftJoin('mi', $this->pt('page'), 'p', 'mi.type_id = 1 AND mi.target = CAST(p.id AS VARCHAR)')
             ->leftJoin('p', $this->pt('page_version'), 'pv', 'p.current_version_id = pv.id')
+            ->leftJoin('pr', $this->pt('product_version'), 'prv', 'pr.published_draft_id=prv.id')
             ->leftJoin('mi', $this->pt('product'), 'pr', 'mi.type_id = 2 AND mi.target = CAST(pr.id AS VARCHAR)')
             ->leftJoin('mi', $this->pt('category'), 'c', 'mi.type_id = 3 AND mi.target = CAST(c.id AS VARCHAR)')
             ->where('mi.menu_id = :menu_id')
