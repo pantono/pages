@@ -4,13 +4,13 @@ namespace Pantono\Pages;
 
 use Pantono\Pages\Repository\MenusRepository;
 use Pantono\Hydrator\Hydrator;
-use League\Container\Event\EventDispatcher;
 use Pantono\Pages\Model\Menu;
 use Pantono\Pages\Model\MenuItemFlat;
 use Pantono\Pages\Event\PreMenuSaveEvent;
 use Pantono\Pages\Event\PostMenuSaveEvent;
 use Pantono\Pages\Model\MenuItemType;
 use Pantono\Pages\Filter\MenuFilter;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class Menus
 {
