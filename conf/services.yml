@@ -2,3 +2,5 @@ Pages:
   class: Pantono\Pages\Pages
 Redirects:
   class: Pantono\Pages\Redirects
+Menus:
+  class: Pantono\Pages\Menus
