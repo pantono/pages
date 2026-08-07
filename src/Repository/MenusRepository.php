@@ -6,6 +6,7 @@ use Pantono\Database\Repository\DefaultRepository;
 use Pantono\Pages\Model\Menu;
 use Doctrine\DBAL\ArrayParameterType;
 use Pantono\Pages\Filter\MenuFilter;
+use Doctrine\DBAL\ParameterType;
 
 class MenusRepository extends DefaultRepository
 {
@@ -85,7 +86,8 @@ class MenusRepository extends DefaultRepository
         $select = $this->getDb()->select('m')->from($this->pt('menu'), 'm');
 
         if ($filter->getIncludeDeleted() === false) {
-            $select->andWhere('m.deleted = 0');
+            $select->andWhere('m.deleted = :deleted')
+                ->setParameter('deleted', false, ParameterType::BOOLEAN);
         }
 
         if ($filter->getSearch() !== null) {
